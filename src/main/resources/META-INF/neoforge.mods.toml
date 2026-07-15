@@ -1,0 +1,29 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="areaplacer"
+version="1.0.0"
+displayName="Area Placer"
+authors="sble"
+description='''
+Client-side area target helper for block placement automation.
+'''
+
+[[dependencies.areaplacer]]
+modId="neoforge"
+type="required"
+versionRange="[21.1.220,)"
+ordering="NONE"
+side="CLIENT"
+
+[[dependencies.areaplacer]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1,1.22)"
+ordering="NONE"
+side="CLIENT"
+
+[[mixins]]
+config="areaplacer.mixins.json"
