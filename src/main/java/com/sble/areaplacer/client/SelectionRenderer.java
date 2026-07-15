@@ -1,4 +1,4 @@
-package com.sble.areaplacer.client;
+package com.example.areaplacer.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

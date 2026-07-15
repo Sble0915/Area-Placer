@@ -1,9 +1,8 @@
 ### Gradle ###
-.gradle/
+.gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/**/build/
-.gradle-cache/
 
 ### IntelliJ IDEA ###
 .idea/
@@ -14,9 +13,6 @@ out/
 !**/src/**/out/
 
 .run/
-
-*.log
-logs/
 
 ### Eclipse ###
 .apt_generated
@@ -33,10 +29,8 @@ bin/
 ### VS Code ###
 .vscode/
 
-### OS ###
+### Mac OS ###
 .DS_Store
-Thumbs.db
-Desktop.ini
 
 ### Minecraft Modding ###
 run/

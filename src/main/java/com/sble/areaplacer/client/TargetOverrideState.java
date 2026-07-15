@@ -1,4 +1,4 @@
-package com.sble.areaplacer.client;
+package com.example.areaplacer.client;
 
 public class TargetOverrideState {
     private static PlacementAttempt currentAttempt;

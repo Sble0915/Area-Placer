@@ -1,4 +1,4 @@
-package com.sble.areaplacer.client;
+package com.example.areaplacer.client;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;

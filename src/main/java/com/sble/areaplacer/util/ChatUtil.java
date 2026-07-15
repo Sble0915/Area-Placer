@@ -1,4 +1,4 @@
-package com.sble.areaplacer.util;
+package com.example.areaplacer.util;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;

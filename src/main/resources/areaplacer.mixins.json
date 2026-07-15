@@ -5,7 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [],
   "client": [
-    "com.sble.areaplacer.mixin.MinecraftUseRedirectMixin"
+    "MinecraftUseRedirectMixin"
   ],
   "injectors": {
     "defaultRequire": 1
