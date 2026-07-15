@@ -1,12 +1,14 @@
-package com.example.areaplacer.client;
+package com.sble.areaplacer.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemNameBlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.StemBlock;
@@ -32,7 +34,15 @@ public class PlacementTargetFinder {
 
         ItemStack held = mc.player.getMainHandItem();
 
-        // 1. 씨앗류/작물류는 farmland 위 planting 후보를 최우선으로 찾음
+        // 1. 괭이 우선: 흙/잔디를 farmland로 만들기
+        if (isHoeItem(held)) {
+            PlacementAttempt hoeAttempt = findHoeTillAttempt();
+            if (hoeAttempt != null) {
+                return hoeAttempt;
+            }
+        }
+
+        // 2. 씨앗류/작물류 우선: farmland 위 planting
         if (isFarmlandPlantItem(held)) {
             PlacementAttempt farmingAttempt = findFarmlandPlantAttempt();
             if (farmingAttempt != null) {
@@ -40,7 +50,7 @@ public class PlacementTargetFinder {
             }
         }
 
-        // 2. 일반 설치 로직
+        // 3. 일반 설치 로직
         List<BlockPos> all = AreaIterator.getAllPositions();
 
         for (BlockPos targetPos : all) {
@@ -58,6 +68,42 @@ public class PlacementTargetFinder {
             if (attempt != null) {
                 return attempt;
             }
+        }
+
+        return null;
+    }
+
+    private static PlacementAttempt findHoeTillAttempt() {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null || mc.level == null) return null;
+
+        List<BlockPos> all = AreaIterator.getAllPositions();
+
+        for (BlockPos pos : all) {
+            if (!ReachUtil.isWithinReach(mc.player, pos, 6.0)) {
+                continue;
+            }
+
+            BlockState state = mc.level.getBlockState(pos);
+            Block block = state.getBlock();
+
+            // 우선 흙 / 잔디만 처리
+            if (!(block == Blocks.DIRT || block == Blocks.GRASS_BLOCK)) {
+                continue;
+            }
+
+            // 위가 비어 있어야 괭이질 가능
+            BlockPos above = pos.above();
+            BlockState aboveState = mc.level.getBlockState(above);
+            if (!aboveState.canBeReplaced()) {
+                continue;
+            }
+
+            // 블록 윗면을 클릭해서 경작
+            Direction clickedFace = Direction.UP;
+            Vec3 hitVec = Vec3.atCenterOf(pos).add(0.0, 0.5, 0.0);
+
+            return new PlacementAttempt(pos, pos, clickedFace, hitVec);
         }
 
         return null;
@@ -82,12 +128,10 @@ public class PlacementTargetFinder {
             BlockPos below = targetPos.below();
             BlockState belowState = mc.level.getBlockState(below);
 
-            // 아래가 farmland여야 함
             if (!(belowState.getBlock() instanceof FarmBlock)) {
                 continue;
             }
 
-            // farmland의 윗면을 클릭해서 심기
             Direction clickedFace = Direction.UP;
             Vec3 hitVec = Vec3.atCenterOf(below).add(0.0, 0.5, 0.0);
 
@@ -124,23 +168,25 @@ public class PlacementTargetFinder {
         return null;
     }
 
+    private static boolean isHoeItem(ItemStack stack) {
+        if (stack.isEmpty()) return false;
+        return stack.getItem() instanceof HoeItem;
+    }
+
     private static boolean isFarmlandPlantItem(ItemStack stack) {
         if (stack.isEmpty()) return false;
         if (!(stack.getItem() instanceof BlockItem blockItem)) return false;
 
         Block placedBlock = blockItem.getBlock();
 
-        // 밀/당근/감자/비트/네더와트 계열 등 crop 류
         if (placedBlock instanceof CropBlock) {
             return true;
         }
 
-        // 호박/수박 줄기
         if (placedBlock instanceof StemBlock) {
             return true;
         }
 
-        // ItemNameBlockItem 계열은 씨앗류가 많아서 같이 허용
         return stack.getItem() instanceof ItemNameBlockItem;
     }
 }

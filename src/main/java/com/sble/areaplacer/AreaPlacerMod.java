@@ -1,6 +1,6 @@
-package com.example.areaplacer;
+package com.sble.areaplacer;
 
-import com.example.areaplacer.client.ClientInit;
+import com.sble.areaplacer.client.ClientInit;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
