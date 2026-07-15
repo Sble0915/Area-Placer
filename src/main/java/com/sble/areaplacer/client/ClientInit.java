@@ -1,4 +1,4 @@
-package com.example.areaplacer.client;
+package com.sble.areaplacer.client;
 
 import net.minecraft.client.Minecraft;
 import net.neoforged.bus.api.IEventBus;

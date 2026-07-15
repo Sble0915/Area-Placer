@@ -1,6 +1,6 @@
-package com.example.areaplacer.client;
+package com.sble.areaplacer.client;
 
-import com.example.areaplacer.util.ChatUtil;
+import com.sble.areaplacer.util.ChatUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;

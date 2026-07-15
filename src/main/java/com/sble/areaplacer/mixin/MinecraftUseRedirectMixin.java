@@ -1,8 +1,8 @@
-package com.example.areaplacer.mixin;
+package com.sble.areaplacer.mixin;
 
-import com.example.areaplacer.client.PlacementAttempt;
-import com.example.areaplacer.client.PlacementHitResultFactory;
-import com.example.areaplacer.client.TargetOverrideState;
+import com.sble.areaplacer.client.PlacementAttempt;
+import com.sble.areaplacer.client.PlacementHitResultFactory;
+import com.sble.areaplacer.client.TargetOverrideState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
